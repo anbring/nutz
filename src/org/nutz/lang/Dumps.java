@@ -26,7 +26,7 @@ public abstract class Dumps {
      * 显示 Matcher 的详细信息
      * 
      * @param m
-     *            Matcher 对象
+     *            Matcher 对象，必须未执行过 find
      * @return 信息
      */
     public static String matcher(Matcher m) {
@@ -39,13 +39,18 @@ public abstract class Dumps {
      * 显示 Matcher 的详细信息
      * 
      * @param m
-     *            Matcher 对象
+     *            Matcher 对象，必须执行过 find
      * @return 信息
      */
     public static String matcherFound(Matcher m) {
         StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%d/%d  Regin:%d/%d\n",
+                                m.start(),
+                                m.end(),
+                                m.regionStart(),
+                                m.regionEnd()));
         for (int i = 0; i <= m.groupCount(); i++)
-            sb.append(String.format("%2d: %s\n", i, m.group(i)));
+            sb.append(String.format("%2d:[%3d,%3d) %s\n", i, m.start(i), m.end(i), m.group(i)));
         return sb.toString();
     }
 
